@@ -1,60 +1,71 @@
 ---
-title: "A/B Testing Draft 1"
-output: pdf_document
-   
+title: "Exploring Common Challenges in AB Testing"
+subtitle: "A guide for making the most out of your A/B testing cycles"
+output: 
+  pdf_document: 
+    number_sections: yes
 ---
 
 ```{r setup, include=FALSE, fig.height= 4, fig.width= 6}
-knitr::opts_chunk$set(echo = FALSE)
 library(knitr)
-
+knitr::opts_chunk$set(echo = FALSE)
 ```
+# The Problem
 
 A/B testing has become a buzz-word across the tech landscape. The method allows decision makers to see which version of a product performs better and enables leaders to make evidence-informed decisions. Companies, political campaigns, and market research firms, often utilize these tests to improve website design, products, and marketing strategies. 
 
-You’re probably already doing A/B testing, but you could be doing it wrong. There are four common errors that undermine the results of your test and lead to bad decisions:
+You’re probably already doing A/B testing, **but you could be doing it wrong**.
+
+There are four common errors that undermine the results of your test and lead to bad decisions:
 
 * Optional Stopping: running the same test until you see a positive result.
-* Multiple Comparisons: if there is a negative result, try a different outcome.
+* Multiple Comparisons: if there is a negative result, trying a different outcome.
 * Insignificant “Significant” Results: ignoring effect size.
-* Ignoring Interactions: randomization is not always enough. 
+* Ignoring Interactions: Considering potential hidden patterns within the data. 
 
-## Optional stopping
+We review these errors below, and provide tips and some examples to illustrate how to spot these errors and prevent them.
 
-One choice during the A/B process is deciding when data collection should stop and testing should begin. Making quick decisions is valuable, and it is tempting to frequently test the results as data comes in. For instance, you could stop data collection after every 100 users and conduct your analysis; if there is no significant finding, you resume data collection and repeat the process.
+# Knowing When to Stop: Optional Stopping
 
-This is a problem. Following A/B test theory, there is a 5% chance that a positive result is a false positive. Increasing the number of stops increases this chance of a false positive. 
+One choice during the A/B process is deciding when data collection should stop and testing should begin. Making quick decisions is valuable, and it is tempting to frequently test the results as data comes in.
 
-To illustrate this problem, let’s conduct a series of simulations with a varying number of stops. The data were simulated such that there is no true difference between version A and version B, so any positive result is a false positive:
+* For instance, you could stop data collection after every 100 users and conduct your analysis; if there is no significant finding, you resume data collection and repeat the process. Seems logical, right?
+
+This is a problem. Following A/B testing practices, there is a 5% chance that a positive result is a false positive. Increasing the number of stops **increases this chance of a false positive.** 
+
+Why? Let's take a look below to illustrate: 
+
+* Let’s conduct a series of simulations with a varying number of stops. The data were simulated such that there is no true difference between version A and version B, so any positive result is a false positive:
 
 * Results show that stopping five times increases the false positive rate to about 15%, whereas stopping as many as 20 times increases the false positive rate to about 25%. 
-* Frequent stopping can seem like a way to deliver quick results, but it drastically increases the risk of reaching a false conclusion. 
 
+* Frequent stopping can seem like a way to deliver quick results, but it drastically increases the risk of reaching a false conclusion. 
 
 ```{r, echo=FALSE, fig.align='center', out.width='80%'}
 include_graphics("figures/optional_stops.png")
 ```
 
-
-## The Multiple Comparison Problem
+# Too Many Comparisons: The Multiple Comparison Problem
 
 A single A/B test cycle can be used to answer many questions:
 
 * Was there a difference in time spent between version A and version B?
 * How about a difference in the number of clicks or likes? 
+* Did someone purchase a product more often in version A than version B?
 
-Testing multiple outcomes allows you to get the most out of a single cycle, but careful considerations need to be taken to avoid drastically increasing the false positive rate. This risk increases with each additional outcome and without implementing the correct adjustment, the probability of coming to a false conclusion substantially rises. 
- 
-> * To calculate the increase in risk of a false positive result, there is a simple formula based on the number of hypotheses you are testing (c) at a significance level of 0.05:
+The list goes on.
 
-> * Probability of at least one false positive = $1 - (1 - 0.05)^c$
+Testing multiple outcomes allows you to get the most out of a single cycle, but careful considerations need to be taken to avoid drastically increasing the false positive rate. This risk increases with each additional outcome, and, without implementing the correct adjustment, the probability of coming to a false conclusion substantially rises. 
 
-> * Example: 5 tests = 1-(1-0.05)^5  = 23% chance of a false positive.
+> **To calculate the increase in risk of a faslse positive result, there is a simple formula based on the number of hypotheses you are testing ($N$) at a significance level of 0.05 (false-positive rate):**
 
-The risk of multiple comparisons can be controlled by introducing the Bonferroni correction ^[https://www.stat.berkeley.edu/~mgoldman/Section0402.pdf], which accounts for the additional false positive risk introduced with each additional outcome. 
+> * **Probability of at least one false positive = $1 - (1 - 0.05)^N$**
 
-To illustrate the implications of uncontrolled multiple comparison, let's conduct another series of simulations, but this time replace varying stops with varying numbers of comparisons. Like before, there is no difference between version A and version B, and any positive result is a false positive. 
+> * **Example: 5 tests = $1-(1-0.05)^5$  = 23% chance of a false positive.**
 
+The risk of multiple comparisons can be controlled by introducing the *"Bonferroni Correction"* ^[https://www.stat.berkeley.edu/~mgoldman/Section0402.pdf], which accounts for the additional false positive risk introduced with each additional outcome. 
+
+To illustrate the implications of uncontrolled multiple comparison, let's conduct another series of simulations, but this time replace varying stops with varying numbers of comparisons. Here, we have one stopping point, but several different outcome measurements. Like before, there is no difference between version A and version B, and any positive result is a false positive. 
 
 The plot below shows the increase in false positives as the number of comparisons increases:
 
@@ -67,11 +78,13 @@ include_graphics("figures/multiple_comparisons.png")
 ```
 
 
-## Insignificant “Significant” Results
+# Not So Fast: Insignificant “Significant” Results
 
-Let’s say you ran your A/B test and achieved statistically significant results. You may think your work is done, but it’s important to consider the meaning of the effect size that you’re measuring, and its implications.
+Let’s say you ran your A/B test and achieved statistically significant results. You may think your work is done, but it’s important to consider the meaning of the **effect size** that you’re measuring, and its implications.
 
-The below examples visualize different effect sizes that all have statistically significant results (p-values < 0.05). You can clearly see that although all effect sizes are statistically significant, they each can have different meanings (a 10% change could have a much larger impact on your company than 1%).
+The below examples visualize different effect sizes that all have statistically significant results (p-values < 0.05). 
+
+You can clearly see that although all effect sizes are statistically significant, they each can have different meanings (a 10% change could have a much larger impact on your company than 1%).
 
 
 ```{r, echo=FALSE, fig.align='center', out.width='80%'}
@@ -80,18 +93,13 @@ include_graphics("figures/effect_comp.png")
 
 Now, if the true difference between both versions was one second spent on the website, is this meaningful enough to your team? Will it translate it into higher revenue that can justify rolling out this new version? Sometimes implementing a new version of a product can be costly, so it’s imperative to review whether or not it’s worth it. You should think not only of statistical significance, but the effect size.  
 
-
-### Large sample, small effect
-
 Incredibly small effects reach statistical significance as sample size grows. If you usually work with large sample sizes, a statistically significant result many not necessarily signal a meaningful change.
-
 
 ```{r, echo=FALSE, fig.align='center', out.width='80%'}
 include_graphics("figures/effect_size.png")
 ```
 
-
-## Ignoring Interactions
+# Hidden Patterns & Skewed Results: Ignoring Interactions
 
 The power of randomization is that it allows you to make causal conclusions. However, randomization is not enough to uncover hidden patterns within your test. 
 
@@ -114,8 +122,9 @@ When you examine the potential interaction between mediums (either computer or m
 include_graphics("figures/interaction.png")
 ```
 
+\pagebreak
 
-## Conclusion
+# Tying it all together
 
 A/B testing is a powerful tool that is frequently praised for its simplicity and ease of analysis. However, misguided conclusions can be made when optional stopping, multiple comparisons, effect size, and possible interactions are ignored. 
 
