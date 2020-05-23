@@ -1,6 +1,6 @@
 ---
-title: "Exploring Common Challenges in AB Testing"
-subtitle: "A guide for making the most out of your A/B testing cycles"
+title: "Exploring Common Challenges in A/B Testing"
+subtitle: "A guide for getting the most out of your testing cycles"
 output: pdf_document
 ---
 
@@ -29,15 +29,15 @@ One choice during the A/B process is deciding when data collection should stop a
 
 * For instance, you could stop data collection after every 100 users and conduct your analysis; if there is no significant finding, you resume data collection and repeat the process. Seems logical, right?
 
-This is a problem. Following A/B testing practices, there is a 5% chance that a positive result is a false positive. Increasing the number of stops **increases this chance of a false positive.** 
+This is a problem. Following A/B testing practices, there is a 5% chance that a positive result is a false positive. Increasing the number of stops **increases this chance of a false positive. Why?**
 
-Why? Let's take a look below to illustrate: 
+**Example:**
 
-* Let’s conduct a series of simulations with a varying number of stops. The data were simulated such that there is no true difference between version A and version B, so any positive result is a false positive:
+Let’s conduct a series of simulations with a varying number of stops. The data were simulated such that there is no true difference between version A and version B, so any positive result is a false positive:
 
-* Results show that stopping five times increases the false positive rate to about 15%, whereas stopping as many as 20 times increases the false positive rate to about 25%. 
++ Results show that stopping five times increases the false positive rate to about 15%, whereas stopping as many as 20 times increases the false positive rate to about 25%. 
 
-* Frequent stopping can seem like a way to deliver quick results, but it drastically increases the risk of reaching a false conclusion. 
++ Frequent stopping can seem like a way to deliver quick results, but it drastically increases the risk of reaching a false conclusion. 
 
 ```{r, echo=FALSE, fig.align='center', out.width='80%'}
 include_graphics("figures/optional_stops.png")
@@ -48,22 +48,24 @@ include_graphics("figures/optional_stops.png")
 A single A/B test cycle can be used to answer many questions:
 
 * Was there a difference in time spent between version A and version B?
-* How about a difference in the number of clicks or likes? 
+* Was there a difference in the number of clicks or likes? 
 * Did someone purchase a product more often in version A than version B?
 
 The list goes on.
 
 Testing multiple outcomes allows you to get the most out of a single cycle, but careful considerations need to be taken to avoid drastically increasing the false positive rate. This risk increases with each additional outcome, and, without implementing the correct adjustment, the probability of coming to a false conclusion substantially rises. 
 
-> **To calculate the increase in risk of a faslse positive result, there is a simple formula based on the number of hypotheses you are testing ($N$) at a significance level of 0.05 (false-positive rate):**
+> **To calculate the increase in risk of a false positive result, there is a simple formula based on the number of hypotheses you are testing ($N$) at a significance level of 0.05 (false-positive rate):**
 
 > * **Probability of at least one false positive = $1 - (1 - 0.05)^N$**
 
-> * **Example: 5 tests = $1-(1-0.05)^5$  = 23% chance of a false positive.**
+> * **5 tests = $1-(1-0.05)^5$  = 23% chance of a false positive.**
 
-The risk of multiple comparisons can be controlled by introducing the *"Bonferroni Correction"* ^[https://www.stat.berkeley.edu/~mgoldman/Section0402.pdf], which accounts for the additional false positive risk introduced with each additional outcome. 
+The risk of multiple comparisons can be controlled by introducing the **Bonferroni Correction** ^[https://www.stat.berkeley.edu/~mgoldman/Section0402.pdf], which accounts for the additional false positive risk introduced with each additional outcome. 
 
-To illustrate the implications of uncontrolled multiple comparison, let's conduct another series of simulations, but this time replace varying stops with varying numbers of comparisons. Here, we have one stopping point, but several different outcome measurements. Like before, there is no difference between version A and version B, and any positive result is a false positive. 
+**Example:**
+
+Let's conduct another series of simulations, but this time replace varying stops with varying numbers of comparisons. Here, we have one stopping point, but several different outcome measurements. Like before, there is no difference between version A and version B, and any positive result is a false positive. 
 
 The plot below shows the increase in false positives as the number of comparisons increases:
 
@@ -80,7 +82,9 @@ include_graphics("figures/multiple_comparisons.png")
 
 Let’s say you ran your A/B test and achieved statistically significant results. You may think your work is done, but it’s important to consider the meaning of the **effect size** that you’re measuring, and its implications.
 
-The below examples visualize different effect sizes that all have statistically significant results (p-values < 0.05). 
+**Example:**
+
+Below we visualize different effect sizes that all have statistically significant results (p-values < 0.05). 
 
 You can clearly see that although all effect sizes are statistically significant, they each can have different meanings (a 10% change could have a much larger impact on your company than 1%).
 
@@ -89,9 +93,11 @@ You can clearly see that although all effect sizes are statistically significant
 include_graphics("figures/effect_comp.png")
 ```
 
+\pagebreak
+
 Now, if the true difference between both versions was one second spent on the website, is this meaningful enough to your team? Will it translate it into higher revenue that can justify rolling out this new version? Sometimes implementing a new version of a product can be costly, so it’s imperative to review whether or not it’s worth it. You should think not only of statistical significance, but the effect size.  
 
-Incredibly small effects reach statistical significance as sample size grows. If you usually work with large sample sizes, a statistically significant result many not necessarily signal a meaningful change.
+It's also important to note that incredibly small effects reach statistical significance as sample size grows. If you usually work with large sample sizes, a statistically significant result may not necessarily signal a meaningful change.
 
 ```{r, echo=FALSE, fig.align='center', out.width='80%'}
 include_graphics("figures/effect_size.png")
@@ -99,21 +105,23 @@ include_graphics("figures/effect_size.png")
 
 # Hidden Patterns & Skewed Results: Ignoring Interactions
 
-The power of randomization is that it allows you to make causal conclusions. However, randomization is not enough to uncover hidden patterns within your test. 
+Usually, A/B tests are designed by randomly assigning your target population into two distinct groups: receiving version A and receiving version B. The power of randomization is that it allows you to make causal conclusions, and isolates the effect of your experiment. However, randomization is not enough to uncover potential hidden patterns within your test.
 
-For example, imagine you were a digital news organization interested in comparing the effects of how changing your website impacts how many minutes users spend reading site content. You know that some readers use their computers while others primarily use their phones to visit the site. 
+**Example:**
 
-You conduct your A/B test and use randomization to ensure an equal number of computer and mobile users received version A and version B. If you stopped here and conducted your analysis, you would conclude that there is no difference between version A and version B of the site. 
+Imagine you were a digital news organization interested in comparing the effects of how changing your website impacts how many minutes users spend reading site content. You know that some readers use their computers while others primarily use their phones to visit the site. 
 
-This simple A/B test does not account for the possibility that the effect of version A and version B may differ between computer and mobile users
-
+You conduct your A/B test and use randomization to ensure an equal number of computer and mobile users received version A and version B. If you stopped here and conducted your analysis, you would conclude that there is no difference between version A and version B of the site. We illustrate this below:
 
 ```{r, echo=FALSE, fig.align='center', out.width='80%'}
 include_graphics("figures/no_interaction.png")
 ```
 
+This simple A/B test does not account for the possibility that the effect of version A and version B may differ between computer and mobile users.
 
-When you examine the potential interaction between mediums (either computer or mobile), important differences emerge and a real difference becomes apparent. Among computer users, version B decreases time spent on the site, however, the same version increases time spent for users primarily interacting with the site by their phones. Without carefully exploring your data, underlying patterns can be lost.
+Now, when you examine the potential interaction between mediums (either computer or mobile), important differences emerge and a real difference becomes apparent. 
+
+Below, we see that among computer users, version B decreases time spent on the site, however, the same version increases time spent for users primarily interacting with the site by their phones. Without carefully exploring your data, underlying patterns can be lost.
 
 
 ```{r, echo=FALSE, fig.align='center', out.width='80%'}
@@ -135,5 +143,3 @@ When unaccounted for:
 * Randomization alone is not enough to uncover hidden interactions within A/B tests.
 
 Executing your experiment properly requires being mindful of these four common errors. If you are not, the results of your A/B test may be invalid and lead to poor decision-making.
-
-
