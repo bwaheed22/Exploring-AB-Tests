@@ -1,7 +1,15 @@
 # A/B Testing
 
-White paper illustrating common pitfalls of A/B tests.
+Brief discussion illustrating common pitfalls when implementing AB tests.
+
+We review issues of:
+
+* Optional Stopping
+* Multiple Comparisons
+* Effect size & Statistical Significance
+* Ignoring of interactions between variables
 
 ## Links
- - [To-do](https://docs.google.com/document/d/14MBXcz3E5AfhV1Q_GFUxOr_Rnk8Zq6cf1L5ffhvak2o/edit)
- - [Test dataset](https://www.kaggle.com/yufengsui/mobile-games-ab-testing)
+
+The following test data was used to illustrate examples pertaining to the above issues:
+ * [Test dataset](https://www.kaggle.com/yufengsui/mobile-games-ab-testing)
