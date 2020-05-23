@@ -19,7 +19,7 @@ There are four common errors that undermine the results of your test and lead to
 * Optional Stopping: running the same test until you see a positive result.
 * Multiple Comparisons: if there is a negative result, trying a different outcome.
 * Insignificant “Significant” Results: ignoring effect size.
-* Ignoring Interactions: Considering potential hidden patterns within the data. 
+* Ignoring Interactions: examining potential hidden patterns within the data. 
 
 We review these errors below, and provide tips and some examples to illustrate how to spot these errors and prevent them.
 
@@ -29,7 +29,7 @@ One choice during the A/B process is deciding when data collection should stop a
 
 * For instance, you could stop data collection after every 100 users and conduct your analysis; if there is no significant finding, you resume data collection and repeat the process. Seems logical, right?
 
-This is a problem. Following A/B testing practices, there is a 5% chance that a positive result is a false positive. Increasing the number of stops **increases this chance of a false positive. Why?**
+This is a problem. Following A/B testing practices, there is a 5% chance that a positive result is a false positive. Increasing the number of stops **increases this chance of a false positive.**
 
 **Example:**
 
@@ -69,8 +69,8 @@ Let's conduct another series of simulations, but this time replace varying stops
 
 The plot below shows the increase in false positives as the number of comparisons increases:
 
-* With as few as five comparisons, the risk of observing at least one false positive has increased from 5% to 20%
-* However, when the appropriate correction is implemented, the false positive rate is held constant at 5%
+* With as few as five comparisons, the risk of observing at least one false positive has increased from 5% to 20%.
+* However, when the appropriate correction is implemented, the false positive rate is held constant at 5%.
 
 
 ```{r, echo=FALSE, fig.align='center', out.width='80%'}
@@ -95,7 +95,11 @@ include_graphics("figures/effect_comp.png")
 
 \pagebreak
 
-Now, if the true difference between both versions was one second spent on the website, is this meaningful enough to your team? Will it translate it into higher revenue that can justify rolling out this new version? Sometimes implementing a new version of a product can be costly, so it’s imperative to review whether or not it’s worth it. You should think not only of statistical significance, but the effect size.  
+Now, if the true difference between both versions was one second spent on the website:
+* Is this meaningful enough to your team? 
+* Will it translate it into higher revenue that can justify rolling out this new version? 
+
+Sometimes implementing a new version of a product can be costly, so it’s imperative to review whether or not it’s worth it. You should think not only of statistical significance, but the effect size.  
 
 It's also important to note that incredibly small effects reach statistical significance as sample size grows. If you usually work with large sample sizes, a statistically significant result may not necessarily signal a meaningful change.
 
@@ -117,9 +121,9 @@ You conduct your A/B test and use randomization to ensure an equal number of com
 include_graphics("figures/no_interaction.png")
 ```
 
-This simple A/B test does not account for the possibility that the effect of version A and version B may differ between computer and mobile users.
+This simple A/B test does not account for the possibility that the effect of version A and version B may differ between computer and mobile users (p-value > 0.05 shows no statistically significant difference).
 
-Now, when you examine the potential interaction between mediums (either computer or mobile), important differences emerge and a real difference becomes apparent. 
+Now, when you examine the potential interaction between mediums (either computer or mobile), important differences emerge and a real difference becomes apparent that could be valuable to your organization.
 
 Below, we see that among computer users, version B decreases time spent on the site, however, the same version increases time spent for users primarily interacting with the site by their phones. Without carefully exploring your data, underlying patterns can be lost.
 
