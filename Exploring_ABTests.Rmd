@@ -10,7 +10,7 @@ knitr::opts_chunk$set(echo = FALSE)
 ```
 # The Problem
 
-A/B testing has become a buzz-word across the tech landscape. The method allows decision makers to see which version of a product performs better and enables leaders to make evidence-informed decisions. Companies, political campaigns, and market research firms, often utilize these tests to improve website design, products, and marketing strategies. 
+A/B testing is a buzz-word across the tech landscape. The method allows decision makers to see which version of a product performs better and enables leaders to make evidence-informed decisions. Companies, political campaigns, and market research firms, often utilize these tests to improve website design, products, and marketing strategies. 
 
 You’re probably already doing A/B testing, **but you could be doing it wrong**.
 
