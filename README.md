@@ -8,8 +8,3 @@ We review issues of:
 * Multiple Comparisons
 * Effect size & Statistical Significance
 * Ignoring of interactions between variables
-
-## Links
-
-The following test data was used to illustrate examples pertaining to the above issues:
- * [Test dataset](https://www.kaggle.com/yufengsui/mobile-games-ab-testing)
