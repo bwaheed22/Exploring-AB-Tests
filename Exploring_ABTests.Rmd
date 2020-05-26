@@ -96,6 +96,7 @@ include_graphics("figures/effect_comp.png")
 \pagebreak
 
 Now, if the true difference between both versions was one second spent on the website:
+
 * Is this meaningful enough to your team? 
 * Will it translate it into higher revenue that can justify rolling out this new version? 
 
@@ -109,7 +110,7 @@ include_graphics("figures/effect_size.png")
 
 # Hidden Patterns & Skewed Results: Ignoring Interactions
 
-Usually, A/B tests are designed by randomly assigning your target population into two distinct groups: receiving version A and receiving version B. The power of randomization is that it allows you to make causal conclusions, and isolates the effect of your experiment. However, randomization is not enough to uncover potential hidden patterns within your test.
+Usually, A/B tests are designed by randomly assigning your target population into two distinct groups: those receiving version A and those receiving version B. The power of randomization is that it allows you to make causal conclusions, and isolates the effect of your experiment. However, randomization is not enough to uncover potential hidden patterns within your test.
 
 **Example:**
 
@@ -125,7 +126,7 @@ This simple A/B test does not account for the possibility that the effect of ver
 
 Now, when you examine the potential interaction between mediums (either computer or mobile), important differences emerge and a real difference becomes apparent that could be valuable to your organization.
 
-Below, we see that among computer users, version B decreases time spent on the site, however, the same version increases time spent for users primarily interacting with the site by their phones. Without carefully exploring your data, underlying patterns can be lost.
+Below, we see that among computer users, version B decreases time spent on the site, however, the same version increases time spent for users primarily interacting with the site on their phones. Without carefully exploring your data, underlying patterns can be lost.
 
 
 ```{r, echo=FALSE, fig.align='center', out.width='80%'}
@@ -142,8 +143,8 @@ When unaccounted for:
 
 * Frequently checking your data mid experiment (optional stoppage) and conducting multiple comparisons without correction drastically increases the rate of false positives. 
 
-* Statistical significance and meaningful difference are not the same.
+* Statistical significance and meaningful difference can lead to very different decisions and could have a large impact on your organization.
 
-* Randomization alone is not enough to uncover hidden interactions within A/B tests.
+* Randomization can hide meaniongful interactions within A/B tests that are worth exploring.
 
 Executing your experiment properly requires being mindful of these four common errors. If you are not, the results of your A/B test may be invalid and lead to poor decision-making.
